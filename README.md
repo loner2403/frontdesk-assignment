@@ -17,7 +17,7 @@
 11. [Room Events & Auditing](#room-events--auditing)
 12. [Error Handling & Reliability](#error-handling--reliability)
 13. [Extensibility & Future Improvements](#extensibility--future-improvements)
-14. [Developer Notes & FAQ](#developer-notes--faq)
+
 
 ---
 
@@ -242,7 +242,7 @@ REACT_APP_LIVEKIT_WS_URL=wss://your-livekit-url
 
 ### 4. Database Setup
 ```bash
-npx prisma migrate deploy
+npx prisma migrate dev
 npx prisma generate
 ```
 
@@ -481,6 +481,3 @@ A: Deploy backend (Node.js) and both frontends (React) to your preferred cloud p
 
 ---
 
-## Appendix: Product/Design Brief
-
-See [PRD.md](./PRD.md) for the full assignment and design rationale. 
