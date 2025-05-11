@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model HelpRequest {
+  id                 String   @id @default(uuid())
+  question           String
+  // Direct callerId string instead of JSON
+  callerId           String
+  status             HelpRequestStatus
+  createdAt          DateTime @default(now())
+  resolvedAt         DateTime?
+  supervisorResponse String?
+  knowledgeBaseEntry KnowledgeBaseEntry? @relation(fields: [knowledgeBaseEntryId], references: [id])
+  knowledgeBaseEntryId String? @unique
+}
+
+model KnowledgeBaseEntry {
+  id        String   @id @default(uuid())
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+  source    String   // e.g. "supervisor", "ai"
+  helpRequest HelpRequest?
+}
+
+model RoomEvent {
+  id        String   @id @default(uuid())
+  roomName  String
+  eventType String
+  participantId String?
+  participantName String?
+  data      String?
+  createdAt DateTime @default(now())
+}
+
+enum HelpRequestStatus {
+  pending
+  resolved
+  unresolved
+}
